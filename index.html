@@ -8,7 +8,46 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      padding: 20px; /* Add padding to the page */
     }
+
+    /* Responsive styles */
+    @media (max-width: 768px) { /* iPhone SE and smaller devices */
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 14px;
+      }
+      #install-banner {
+        font-size: 12px;
+        padding: 8px 16px;
+      }
+      .instructions-section {
+        padding: 10px;
+      }
+      .instructions-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      .instructions-description {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+      /* Videos should stack on mobile */
+      .video-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .video-embed {
+        width: 100%; /* Full width on mobile */
+        height: auto; /* To maintain aspect ratio */
+      }
+    }
+
+    /* Default styles for larger devices */
     #install-banner {
       display: none;
       position: fixed;
@@ -21,6 +60,28 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
+    /* Video container styles */
+    .video-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .video-link {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .video-embed {
+      width: 100%;
+      height: 250px;
+      border: none;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
@@ -28,6 +89,24 @@
   <p>This is a simple proof of concept to demonstrate "Add to Home Screen" functionality.</p>
   
   <div id="install-banner">Add to Home Screen</div>
+
+  <!-- New responsive section with video instructions -->
+  <div class="instructions-section">
+    <h2 class="instructions-title">How to Add to Home Screen Manually</h2>
+    <p class="instructions-description">Watch the following videos to learn how to manually add this web page to your home screen on iOS and Android:</p>
+    <div class="video-container">
+      <!-- iOS Instructions Video -->
+      <div style="width: 100%;">
+        <h3>iOS Instructions</h3>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/I4e1aoi0P-o" allowfullscreen></iframe>
+      </div>
+      <!-- Android Instructions Video -->
+      <div style="width: 100%;">
+        <h3>Android Instructions</h3>
+        <iframe class="video-embed" src="https://www.youtube.com/embed/gZTEWw2dGVw" allowfullscreen></iframe>
+      </div
+    </div>
+  </div>
 
   <script>
     // Register the service worker
