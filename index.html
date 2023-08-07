@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple A2HS Proof of Concept</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #install-banner {
+      display: none;
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #007bff;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simple A2HS Proof of Concept</h1>
+  <p>This is a simple proof of concept to demonstrate "Add to Home Screen" functionality.</p>
+  
+  <div id="install-banner">Add to Home Screen</div>
+
+  <script>
+    // Register the service worker
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("service-worker.js")
+          .then(() => {
+            console.log("Service Worker registered successfully.");
+          })
+          .catch((error) => {
+            console.error("Error registering Service Worker:", error);
+          });
+      });
+    }
+
+    // Listen for the "beforeinstallprompt" event
+    window.addEventListener("beforeinstallprompt", (event) => {
+      // Prevent the default browser prompt
+      event.preventDefault();
+      
+      // Store the event for later use
+      let deferredPrompt = event;
+      
+      // Show your custom installation prompt or UI here
+      const installBanner = document.getElementById("install-banner");
+      installBanner.style.display = "block";
+      installBanner.addEventListener("click", () => {
+        // Show the browser's installation prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === "accepted") {
+            console.log("User accepted the A2HS prompt.");
+          } else {
+            console.log("User dismissed the A2HS prompt.");
+          }
+          // Clear the deferredPrompt variable
+          deferredPrompt = null;
+          // Hide the install banner
+          installBanner.style.display = "none";
+        });
+      });
+    });
+  </script>
+</body>
+</html>
